@@ -104,3 +104,8 @@ def add_months(tx_date, tx_num):
     """
     out_date = date_sub(get_month_start(__add_months_init(tx_date_init, 1)), 1)
     return out_date
+
+
+print(date_add("2023-06-21", 10))
+print(date_sub("2023-06-21", 10))
+print(add_months("2020-06-30", -4))
