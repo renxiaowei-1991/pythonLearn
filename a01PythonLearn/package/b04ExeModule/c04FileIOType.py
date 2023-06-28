@@ -48,6 +48,28 @@ def get_file_details(filepath, filename):
     return
 
 
+def write_file_func(filename, val):
+    """
+    将指定二维数组数据写入指定文件：这里是专门为了写2维数组的数据编写的测试程序，特殊作用
+    :param filename: 目标文件
+    :param val: 写入的信息(这里是专门为了写2维数组的数据编写的测试程序，特殊作用)
+    :return:
+    """
+    try:
+        file01 = open(filename, 'w+', encoding='utf-8')
+        for v_list in val:
+            file01.write("\t".join([str(var) for var in v_list]))
+            file01.write("\n")
+    except BaseException as be:
+        print("写文件失败，报错信息是：", be)
+    else:
+        print("写文件成功！")
+    finally:
+        if not file01.closed:
+            file01.close()
+    return
+
+
 def copy_file_func(srcfile01, srcfile02):
     """
     复制文件，将文件filename01的内容复制到filename02中。
