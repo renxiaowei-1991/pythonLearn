@@ -59,9 +59,35 @@ def listDerivation():
 
 """
 字典推导式练习
+    c.items() 
+        返回的结果中，每一组是一个元组。这个元组包括两个值。第一个是原来的key，另外一个是value
+        可以使用元组存放。也可以直接赋值给两个变量
 """
+def dictDerivation():
+    c = {"a": 1, "b": 2, "c": 3}
+    # 字典推导式
+    b = {x[0]: x[1] for x in c.items() if x[1] <= 1}
+    # {'a': 1}
+    print(b)
+
+    # 字典推导式
+    x = {"a": 1, "b": 2, "c": 3}
+    y = {key: value for key, value in c.items() if value <= 1}
+    # {'a': 1}
+    print(y)
+
+    # 字典推导式
+    # 字典可以直接被替换
+    x = {"a": 1, "b": 2, "c": 3}
+    x = {key: value for key, value in c.items() if value <= 1}
+    # {'a': 1}
+    print(x)
+    return
+
 
 if __name__ == "__main__":
     print("列表推导式练习：")
     listDerivation()
+    print("字典推导式练习：")
+    dictDerivation()
     
