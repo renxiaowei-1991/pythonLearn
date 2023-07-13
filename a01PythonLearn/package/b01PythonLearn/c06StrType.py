@@ -106,12 +106,6 @@ import string
             等价于string.zlill(2)
             不过rjust可以指定用于补充的字符
             补齐两位(2->02),用于数值月份转字符串月份
-    
-    f-string语法：
-        在字符串前面加个f符号，里面可以使用{item}、{index}的方式访问变量，这叫f-string语法
-        样例：
-            tx = "2023-07-09"
-            print(f"date is {tx}")
 
 """
 
@@ -187,9 +181,3 @@ sql03 = """
     where dt = '{tx_date}'
       and {filter}
 """.format(**dictA)
-
-
-# 在字符串前面加个f符号，里面可以使用{item}、{index}的方式访问变量，这叫f-string语法
-a = [1, 2, 3]
-for index, item in enumerate(a):
-    print(f"Item {item} has index {index}")

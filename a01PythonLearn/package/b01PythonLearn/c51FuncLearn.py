@@ -2,9 +2,6 @@
 # -*- coding:UTF-8 -*-
 
 import math
-import stringprep
-from pprint import pprint
-import string
 
 """
     基础语句
@@ -75,12 +72,6 @@ print(list(range(5, 5, 1)))
             "{} {}".format("hello","world")
             "{0} {1}".format("hello","world")
             "{1} {0} {1}".format("hello","world")
-            
-    f-string语法：在字符串中直接使用变量
-        在字符串前面加个f符号，里面可以使用{item}、{index}的方式访问变量，这叫f-string语法
-        样例：
-            tx = "2023-07-09"
-            print(f"date is {tx}")
 
 """
 
@@ -119,48 +110,6 @@ listA = ['aaa', '123', 'bbb', '45.3']
 print(listA)
 print("-".join(listA))
 
-
-"""
-sum
-    内置函数，求和
-    可以直接对列表数据进行求和
-
-"""
-d = {"a": 1, "b": 2, "c": 3}
-print(sum(d.values()))
-
-num1 = 0
-for x in range(1, 101):
-    num1 += x
-print(num1)
-
-num2 = 0
-num2 = sum(list(range(1, 101)))
-print(num2)
-
-num3 = 0
-num3 = sum(range(1, 101))
-print(num3)
-
-
-# 计算100之内的偶数和
-print(sum([x for x in range(1, 101) if x % 2 == 0]))
-
-# 计算100之内的偶数和
-sum_value = 0
-for x in range(1, 101):
-    if x % 2 == 0:
-        sum_value += x
-print(sum_value)
-
-# 计算100之内的偶数和
-sum_value = 0
-for x in range(1, 101):
-    if x % 2 == 1:
-        continue
-    else:
-        sum_value += x
-print(sum_value)
 """
     remove()
 
@@ -170,54 +119,3 @@ print(sum_value)
     append()
 
 """
-
-"""
-    from pprint import pprint
-    pprint
-        可以格式化输出，产生比较整齐的输出
-    
-"""
-# dicta = {"a": list(range(1, 11)),
-#          "b": list(range(11, 21)),
-#          "c": list(range(21, 31))
-#          }
-# pprint(dicta)
-
-
-"""
-    string:模块
-        ascii_lowercase:创建ab~yz 的小写字母
-        ascii_uppercase:所有大写字母
-        ascii_letters:所有小写字母+大写字母
-"""
-print(string.ascii_lowercase)
-print(string.ascii_uppercase)
-print(string.ascii_letters)
-print(stringprep.b1_set)
-print(stringprep.c6_set)
-
-
-# 在字符串前面加个f符号，里面可以使用{item}、{index}的方式访问变量，这叫f-string语法
-a = [1, 2, 3]
-for index, item in enumerate(a):
-    print(f"Item {item} has index {index}")
-
-
-"""
-函数功能实现
-"""
-def acceleration_speed(v1, v2, t1, t2):
-    """
-    加速度函数
-    """
-    try:
-        speed = (v2 - v1)/(t2 - t1)
-    except BaseException as be:
-        print(f"计算加速度异常：{be}")
-    else:
-        print(f"开始时间: {t1}, 结束时间: {t2}, 起始速度: {v1}, 结束速度: {v2}, 加速度是：{speed}")
-        return speed
-
-
-if __name__ == "__main__":
-    print(acceleration_speed(0, 10, 0, 20))

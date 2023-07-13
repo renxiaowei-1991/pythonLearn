@@ -98,9 +98,9 @@ def xlrdLearn():
     # 2、返回指定行中所有单元格对象组成的列表。等价于 table.raw()
     rowx = 1
     rows01 = table01.row(rowx)
-    # 3、返回指定行中所以单元格对象组成的列表
+    # 3、返回指定行中所有单元格对象组成的列表
     rows02 = table01.row_slice(rowx)
-    # 4、返回由该行中所以单元格的数据类型组成的列表。返回值为逻辑列表，若类型为empy则为0，否则为1
+    # 4、返回由该行中所有单元格的数据类型组成的列表。返回值为逻辑列表，若类型为empy则为0，否则为1
     rows03 = table01.row_types(rowx, start_colx=0, end_colx=None)
     # 5、返回由该行中所有单元格的数据组成的列表
     rows04 = table01.row_values(rowx, start_colx=0, end_colx=None)

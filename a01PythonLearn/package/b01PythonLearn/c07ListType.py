@@ -51,36 +51,6 @@ import operator
             operator.__ne__(a, b)
             operator.__ge__(a, b)
             operator.__gt__(a, b)
-            
-    列表索引
-        从前面取：正数(第一个是0)
-        从后面取：负数(最后一个是-1)
-        
-    列表切片
-        从前面取：
-            a[2:5] (包含a[2]，不包含a[5])
-            a[0:3] (前面三个)
-            a[:3] (前面三个)
-        从后面取：
-            a[-3:-1] (后面三个，包含 a[-1])
-            a[-3:] (后面三个)
-    
-    带步长的列表切片
-        list[start:end:step]
-        样例：
-            letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
-            letters[0:9:2] 等价与 latters[::2] (从开始到结束，间隔1位取值)
-                结果是：['a', 'c', 'e', 'g', 'i']
-    
-    排序
-        listname.sort()
-            对listname本身进行排序，返回结果为None。而不是返回一个新list
-        listname.sort(reverse=True)
-            sort默认是升序排序，添加reverse=True后是降序排序
-
-    获取元素和下标
-        enumerate(listname):获取list的元素和下标，返回元组。每个元组包含两个值。元素和index
-        listname.index(num):获取num在list中的index
 
 """
 list1 = ['aaa', 'bbb', 123, 23.4]
@@ -108,13 +78,3 @@ list2 = ['123', 'aaa', 123, 45.6, 'ccc']
 print(operator.eq(list1, list2))
 list1.extend(list2)
 print(list1)
-
-
-# enumerate:获取元素和下标(index, item)
-a = [1, 2, 3]
-
-for x in a:
-    print("Item ", x, " has index ", a.index(x))
-
-for index, item in enumerate(a):
-    print("Item ", item, " has index ", index)

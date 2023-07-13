@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 
 import math
-from pprint import pprint
 
 """
     字典
@@ -60,13 +59,6 @@ from pprint import pprint
             删除字典给定键key所对应的值，返回值为被删除的值。key必须给出，否则返回default值
         popitem()
             返回并删除字典中的最后一对键值对
-    
-    遍历字典
-        可以使用dicta.items() + key, value 的形式
-    
-    注意：
-        字典是无需集合
-        遍历字典是不能修改字典元素，否则会报错RuntimeError: dictionary changed size during iteration
 
 
 """
@@ -96,54 +88,3 @@ print(type(dict1.items()))
 print(type(dict1.keys()))
 list1 = list(dict1.keys())
 print(list1)
-
-
-
-# 字典创建练习
-dicta = {}
-dicta['a'] = 1
-dicta['b'] = 2
-print(dicta)
-
-
-dictc = {"a": 1, "b": 2}
-dictc['a'] = 1
-dictc['b'] = 2
-print(dictc)
-
-
-dictb = dict()
-dictb['a'] = 1
-dictb['b'] = 2
-print(dictb)
-
-dictd = dict(a=1, b=2)
-dictd['a'] = 1
-dictd['b'] = 2
-print(dictd)
-
-
-
-
-# 遍历字典是不能修改字典元素，否则会报错RuntimeError: dictionary changed size during iteration
-d = {"a": 1, "b": 2, "c": 3}
-
-# for mapa in d.keys():
-for mapa in list(d.keys()):
-    if d[mapa] > 1:
-        print(d[mapa])
-        d.pop(mapa)
-print(d)
-
-
-# 遍历字典
-dicta = {"a": list(range(1, 11)),
-         "b": list(range(11, 21)),
-         "c": list(range(21, 31))}
-pprint(dicta)
-
-for x in dicta.keys():
-    print(x + " has value ", dicta[x])
-
-for key, value in dicta.items():
-    print(key + " has value ", value)
