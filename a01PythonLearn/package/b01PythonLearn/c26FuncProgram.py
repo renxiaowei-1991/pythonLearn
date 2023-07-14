@@ -87,7 +87,21 @@ lambda表达式
         3! = 3 * 2!
         2! = 2 * 1!
         1! = 1(基准情形)
-    基准情形：当做退出条件。要不会一直循环
+    基准情形：当做退出条件。要不会一直循环。不涉及进一步调用的情形
+    注意：
+        如果没有基准情形，会一直运行，知道解释器内存不足而崩溃
+        
+    递归可以是间接的。一个函数调用第二个函数，第二个函数调用第一个函数。以此类推，可以发生在任何数量的函数上。
+
+
+内建模块: itertools
+    itertools模块是一个标准库，包含了几个在函数编程中很有用的函数。
+    
+    无限迭代器：itertools其中一种函数类型
+        count() : count函数从一个值无限增加
+        cycle() : cycle函数无限次迭代(例如：列表或字符串)
+        repeat() : repeat函数重复一个对象，无论是无限还是特定的次数
+
 
 """
 
@@ -229,6 +243,21 @@ def factorial(x):
         return x * factorial(x - 1)
 
 
+# 多函数递归
+def is_even(x):
+    if x == 0:
+        return True
+    else:
+        return is_odd(x-1)
+
+
+def is_odd(x):
+    return not is_even(x)
+
+
+
+
+
 if __name__ == "__main__":
     # 函数式编程
     print(apply_twice(add_five, 20))
@@ -282,3 +311,5 @@ if __name__ == "__main__":
 
     # 递归
     print("5的阶乘 =", factorial(5))
+    print(is_even((14)))
+    print(is_odd(14))
