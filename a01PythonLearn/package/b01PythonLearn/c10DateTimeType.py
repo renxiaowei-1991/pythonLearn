@@ -6,148 +6,149 @@ import calendar
 import datetime
 
 """
-    日期&时间
-        time 和 calendar 模块用于格式化日期和时间
-        时间间隔是以秒为单位的浮点小数
-        每个时间戳都以从1970年1月1日午夜(历元)经过了多长时间来表示
-        time模块有很多函数可以转换常见日期格式
-        时间戳格式适用于做日期计算，1970之前的日期不行，太靠后的日期也不行，unix、windows只支持到2038年
+日期&时间
+    time 和 calendar 模块用于格式化日期和时间
+    时间间隔是以秒为单位的浮点小数
+    每个时间戳都以从1970年1月1日午夜(历元)经过了多长时间来表示
+    time模块有很多函数可以转换常见日期格式
+    时间戳格式适用于做日期计算，1970之前的日期不行，太靠后的日期也不行，unix、windows只支持到2038年
 
-    时间元组(struct_time)
-        python函数用一个元组装起来的9组数字处理时间
-        序号  字典        值
-        0    4位数年      2008
-        1    月          1-12
-        2    日          1-31
-        3    小时        0-23
-        4    分钟        0-59
-        5    秒          0-61(60,61是闰秒)
-        6    一周的第几日  0-6(0是周一)
-        7    一年的第几日  1-366(儒略历)
-        8    夏令时       -1,0,1,-1是决定是否为夏令时的旗帜
+时间元组(struct_time)
+    python函数用一个元组装起来的9组数字处理时间
+    序号  字典        值
+    0    4位数年      2008
+    1    月          1-12
+    2    日          1-31
+    3    小时        0-23
+    4    分钟        0-59
+    5    秒          0-61(60,61是闰秒)
+    6    一周的第几日  0-6(0是周一)
+    7    一年的第几日  1-366(儒略历)
+    8    夏令时       -1,0,1,-1是决定是否为夏令时的旗帜
 
-    struct_time元组
-        序号  属性      值
-        0    tm_year  2008
-        1    tm_mon   1-12
-        2    tm_mday  1-31
-        3    tm_hour  0-23
-        4    tm_min   0-59
-        5    tm_sec   0-61
-        6    tm_wday  0-6
-        7    tm_yday  1-366
-        8    tm_isdst -1,1,1
+struct_time元组
+    序号  属性      值
+    0    tm_year  2008
+    1    tm_mon   1-12
+    2    tm_mday  1-31
+    3    tm_hour  0-23
+    4    tm_min   0-59
+    5    tm_sec   0-61
+    6    tm_wday  0-6
+    7    tm_yday  1-366
+    8    tm_isdst -1,1,1
 
-    模块
-        datetime(日期时间)模块主要用来表示日期的，就是常说的年月日时分秒
-        calendar(日历)模块主要用来表示年月日，是星期几之类的
-            日历的展示
-        time(时间)模块主要侧重点在时分秒。
-            时间的获取，及时间格式的转换
-        三者关系互补
+模块
+    datetime(日期时间)模块主要用来表示日期的，就是常说的年月日时分秒
+    calendar(日历)模块主要用来表示年月日，是星期几之类的
+        日历的展示
+    time(时间)模块主要侧重点在时分秒。
+        时间的获取，及时间格式的转换
+    三者关系互补
 
-        time模块是一个基础模块，可以满足对时间类型数据的基本处理
-        datetime模块可以看做是对time模块的一个高级封装
+    time模块是一个基础模块，可以满足对时间类型数据的基本处理
+    datetime模块可以看做是对time模块的一个高级封装
 
-        time模块解决了时间的获取和表示
-        datetime进一步解决了快速获取并操作时间中的年月日时分秒信息的能力
+    time模块解决了时间的获取和表示
+    datetime进一步解决了快速获取并操作时间中的年月日时分秒信息的能力
 
-        https://www.cnblogs.com/Hardworking666/p/15866132.html
-        https://baijiahao.baidu.com/s?id=1666748705793386009&wfr=spider&for=pc
-
-
-    time模块(时间)
-        time.time()                  获取当前时间戳
-        time.localtime()             时间元组
-        time.localtime(时间戳)        时间戳-->时间元组
-            如果没有参数，默认取当前时间
-        time.asctime()              标准时间
-        time.asctime(时间元组)        时间元组-->标准时间(最简单的获取可读时间模式的函数)  
-            如果没有参数，默认取当前时间
-        time.strftime(format[, t(时间元组)])   格式化日期
-            如果没有时间参数，默认取当前时间
-        time.strptime(t,"%Y-%m-%d %H:%M:%S")
-            将格式化时间转换成时间元组
-        time.mktime()
-            将时间元组转换成时间戳
-
-        time.mktime(time.strptime(t,"%Y-%m-%d %H:%M:%S"))
-            将格式化日期转换成时间戳
-
-        time.sleep(secs)
-            调用线程的运行，secs指秒数
-
-    calendar模块(日历)
-        calendar模块有广泛的方法用来处理年历和月历。
-        此模块的函数都是和日历相关的
-
-        calendar.calendar(year,w=2,I=1,c=6)
-            返回一个多行字符串格式的year年年历，3个月一行，间隔距离为c。每日宽度间隔为w字符。
-            每行长度为21*W+18+2*C。
-            l是没星期行数
-        calendar.month(年,月)  打印**年**月的日历
-            返回的是带换行的字符串
-        calendar.firstweekday()
-        calendar.setfirstweekday()
-            设置每周第一天的开始天。
-            默认星期一是每周第一天，星期天是最后一天。setfirstweekday可以设置开始的星期
-        calendar.isleap(year)
-            判断year是否是闰年
-        calendar.weekday(year,month,day)
-            返回给定日期的日期码。0(星期一)-6(星期日)
-
-    datetime模块(日期时间)
-        常用类
-        date      日期类
-            year
-            month
-            day
-        time      时间类
-            hour
-            minute
-            second
-            microsecond
-        datetime  日期时间类型
-        datedelta 时间间隔，即两个时间点之间的时间长度
-        tzinfo    时区类
-
-        2个常量
-            datetime.MINYEAR  date和datetime对象允许的最小年份
-            datetime.MAXYEAR  date和datetime对象允许的最大年份
-
-        多个属性
-            datetime.date      日期对象，属性(year,month,day)
-                方法  today()  通过today方法可以获取当前日期的date对象
-            datetime.time      时间对象，属性(hour,minute,second,microsecond,tzinfo)
-            datetime.datetime  日期时间对象，属性(date和time属性)
-                方法  today()  通过today方法可以获取当前日期的datetime对象
-                      now()    通过now方法可以获取当前日期的datetime对象
-            datetime.datedelta Difference between two datetime values(原文)
-            datetime.tzinfo    时区信息对象的抽象基类，datetime和time类使用它定制化时间调节
+    https://www.cnblogs.com/Hardworking666/p/15866132.html
+    https://baijiahao.baidu.com/s?id=1666748705793386009&wfr=spider&for=pc
 
 
-    时间日期格式化符号
-        %y  两位数的年份表示(00-99)
-        %Y  四位数的年份表示(0000-9999)
-        %m  月份(01-12)
-        %d  月内中的一天(0-31)
-        %H  24小时制小时数(0-23)
-        %I  12小时制小时数(01-12)
-        %M  分钟数(00-59)
-        %S  秒(00-59)
-        %a  本地简化星期名称
-        %A  本地完整星期名称
-        %b  本地简化的月份名称
-        %B  本地完整的月份名称
-        %c  本地相应的日期表示和时间表示
-        %j  年内的一天(001-366)
-        %p  本地A.M.或者P.M.的等价符
-        %U  一年中的星期数(00-53)星期天为星期的开始
-        %w  星期(0-6)，星期一为星期的开始
-        %x  本地相应的日期表示
-        %X  本地相应的时间表示
-        %Z  当前时区的名称
-        %%  %号本身
+time模块(时间)
+    time.time()                  获取当前时间戳
+    time.localtime()             时间元组
+    time.localtime(时间戳)        时间戳-->时间元组
+        如果没有参数，默认取当前时间
+    time.asctime()              标准时间
+    time.asctime(时间元组)        时间元组-->标准时间(最简单的获取可读时间模式的函数)  
+        如果没有参数，默认取当前时间
+    time.strftime(format[, t(时间元组)])   格式化日期
+        如果没有时间参数，默认取当前时间
+    time.strptime(t,"%Y-%m-%d %H:%M:%S")
+        将格式化时间转换成时间元组
+    time.mktime()
+        将时间元组转换成时间戳
+
+    time.mktime(time.strptime(t,"%Y-%m-%d %H:%M:%S"))
+        将格式化日期转换成时间戳
+
+    time.sleep(secs)
+        调用线程的运行，secs指秒数
+        休眠secs秒
+
+calendar模块(日历)
+    calendar模块有广泛的方法用来处理年历和月历。
+    此模块的函数都是和日历相关的
+
+    calendar.calendar(year,w=2,I=1,c=6)
+        返回一个多行字符串格式的year年年历，3个月一行，间隔距离为c。每日宽度间隔为w字符。
+        每行长度为21*W+18+2*C。
+        l是没星期行数
+    calendar.month(年,月)  打印**年**月的日历
+        返回的是带换行的字符串
+    calendar.firstweekday()
+    calendar.setfirstweekday()
+        设置每周第一天的开始天。
+        默认星期一是每周第一天，星期天是最后一天。setfirstweekday可以设置开始的星期
+    calendar.isleap(year)
+        判断year是否是闰年
+    calendar.weekday(year,month,day)
+        返回给定日期的日期码。0(星期一)-6(星期日)
+
+datetime模块(日期时间)
+    常用类
+    date      日期类
+        year
+        month
+        day
+    time      时间类
+        hour
+        minute
+        second
+        microsecond
+    datetime  日期时间类型
+    datedelta 时间间隔，即两个时间点之间的时间长度
+    tzinfo    时区类
+
+    2个常量
+        datetime.MINYEAR  date和datetime对象允许的最小年份
+        datetime.MAXYEAR  date和datetime对象允许的最大年份
+
+    多个属性
+        datetime.date      日期对象，属性(year,month,day)
+            方法  today()  通过today方法可以获取当前日期的date对象
+        datetime.time      时间对象，属性(hour,minute,second,microsecond,tzinfo)
+        datetime.datetime  日期时间对象，属性(date和time属性)
+            方法  today()  通过today方法可以获取当前日期的datetime对象
+                  now()    通过now方法可以获取当前日期的datetime对象
+        datetime.datedelta Difference between two datetime values(原文)
+        datetime.tzinfo    时区信息对象的抽象基类，datetime和time类使用它定制化时间调节
+
+
+时间日期格式化符号
+    %y  两位数的年份表示(00-99)
+    %Y  四位数的年份表示(0000-9999)
+    %m  月份(01-12)
+    %d  月内中的一天(0-31)
+    %H  24小时制小时数(0-23)
+    %I  12小时制小时数(01-12)
+    %M  分钟数(00-59)
+    %S  秒(00-59)
+    %a  本地简化星期名称
+    %A  本地完整星期名称
+    %b  本地简化的月份名称
+    %B  本地完整的月份名称
+    %c  本地相应的日期表示和时间表示
+    %j  年内的一天(001-366)
+    %p  本地A.M.或者P.M.的等价符
+    %U  一年中的星期数(00-53)星期天为星期的开始
+    %w  星期(0-6)，星期一为星期的开始
+    %x  本地相应的日期表示
+    %X  本地相应的时间表示
+    %Z  当前时区的名称
+    %%  %号本身
 
 
 

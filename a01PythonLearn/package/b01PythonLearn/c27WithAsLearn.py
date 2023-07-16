@@ -9,6 +9,9 @@ import file
 with ... as ...:
     with as 的用法相当于oracle里面的 with ... as ...的用法
     相当于把一个对象起个别名，在后面可以重复使用。
+    
+注意：
+    用with的方式打开的文件，不用主动使用close()关闭，会自动关闭
 """
 
 

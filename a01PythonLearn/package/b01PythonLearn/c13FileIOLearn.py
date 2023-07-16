@@ -4,6 +4,7 @@
 import os
 import sys
 import file
+import glob
 
 """
 文件I/O
@@ -124,6 +125,9 @@ import file
         注意：
             打开一个文件，先写后读，先读后写，会有冲突，指针的位置问题。
             先写后读：写完之后，指针在最后，这时候直接读，读到的内容是空。
+        
+        注意：
+            如果不知道count，则尽可能读取整个文件内容
 
     flush()
         刷新文件内部缓存，直接把内部缓存数据立刻写入文件，而不是被动等待输出缓存区写入
@@ -251,6 +255,25 @@ import file
         os.path.isfile(path)   判断路径是否为文件
         os.path.isdir(path)    判断路径是否为目录
 
+目标扫描
+    blob模块
+        glob.glob(path)
+            返回匹配path格式的结果的list.
+            glob.glob(base_path + file_path + "\\*.txt")
+                返回满足base_path + file_path + "\\*.txt"的文件list
+
+文件的两种扫描方式
+    os.walk(path)
+        递归的方式扫描path目录下所有目录及文件，已对象的方式返回结果姐。
+        结果可以转为元组。元组里面是子元组。
+        每个子元组包含三个值。(rootpath, subpathlist, filelist)
+            rootpath: 当前目录根目录
+            subpathlist: 当前目录子目录列表
+            filelist: 当前目录文件列表
+    glob.glob(path)
+        返回匹配path格式的结果的list.
+        glob.glob(base_path + file_path + "\\*.txt")
+            返回满足base_path + file_path + "\\*.txt"的文件list
 
 """
 
@@ -511,6 +534,49 @@ def path_change_func(basepath):
     os.chdir(basepath + "\\a01filetest")
     print(os.getcwd())
     return
+
+
+def file_scan():
+    """
+    文件的两种扫描方式
+    os.walk(path)
+        递归的方式扫描path目录下所有目录及文件，已对象的方式返回结果姐。
+        结果可以转为元组。元组里面是子元组。
+        每个子元组包含三个值。(rootpath, subpathlist, filelist)
+            rootpath: 当前目录根目录
+            subpathlist: 当前目录子目录列表
+            filelist: 当前目录文件列表
+    glob.glob(path)
+        返回匹配path格式的结果的list.
+        glob.glob(base_path + file_path + "\\*.txt")
+            返回满足base_path + file_path + "\\*.txt"的文件list
+    :return:
+    """
+    base_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\"
+    file_path = "file\\p054"
+
+    print("扫描目录所有文件，方法一")
+    print(tuple(os.walk(base_path + file_path)))
+    rs_list: list = []
+    for root, sub, files in os.walk(base_path + file_path):
+        for f in files:
+            rs_str: str = ""
+            file01 = open(base_path + file_path + "\\" + f, "r+", encoding="utf-8")
+            for s in file01.readlines():
+                rs_str += s
+            rs_list.append(rs_str)
+    print(rs_list)
+
+    print("扫描目录所有文件，方法二")
+    print(glob.glob(base_path + file_path + "\\*.txt"))
+    rs_list: list = []
+    for f in glob.glob(base_path + file_path + "\\*.txt"):
+        rs_str: str = ""
+        file01 = open(f, "r+", encoding="utf-8")
+        for s in file01.readlines():
+            rs_str += s
+        rs_list.append(rs_str)
+    print(rs_list)
 
 
 if __name__ == '__main__':

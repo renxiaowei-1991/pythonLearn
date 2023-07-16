@@ -120,8 +120,12 @@ Python对象销毁(垃圾回收)
 
 基础重载方法
     下表列出了一些通用的功能，可以在自己定义的类中重写
+    __new__(cls[, ...])
+        实例构造函数。相当于java里面的new
+        https://blog.csdn.net/qq_39363022/article/details/88081914
+        
     __init__(self[, args...])
-        构造函数
+        初始化函数
         简单的调用方法
             obj = ClassName(args)
 

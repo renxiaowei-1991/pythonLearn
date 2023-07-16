@@ -3,7 +3,7 @@
 
 import sys
 import os
-import xlrd
+import xlrd3
 import xlwt
 import xlutils3
 from xlutils3.copy import copy
@@ -11,6 +11,11 @@ from xlutils3.copy import copy
 """
 Excel操作
     https://blog.csdn.net/m0_59235508/article/details/122808875
+    https://www.jianshu.com/p/5d496434ffcf
+    https://blog.csdn.net/Sukie_csdn/article/details/78672626
+    https://www.cnblogs.com/insane-Mr-Li/p/9092619.html
+    https://www.cnblogs.com/Detector/p/8709362.html
+    https://blog.csdn.net/Sukie_csdn/article/details/78672626
 
 python能操作excel的库总共9个，对比如下：
                 WIN MAX PY2 PY3 .xls    .xlsx   读   写   修改

@@ -16,7 +16,7 @@ def opera_excel():
     读取excel文件内容，返回读取结果：二维数组
     :return:
     """
-    base_path = "D:\\03gitHub\\pythonLearn\\a01PythonLearn\\excel\\"
+    base_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\file\\"
     file_name = "xlrdLearn.xls"
     # 添加formatting_info=True后打开的文件可以获取单元格的详细信息
     # 例如：cell_type，如果不加参数，获取的到的值都是0，1，表示有没有数据。添加参数后获取到的值为真实的类型
@@ -45,7 +45,7 @@ def opera_excel():
 
 def opera_excel_xf():
 
-    base_path = "D:\\03gitHub\\pythonLearn\\a01PythonLearn\\excel\\"
+    base_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\file\\"
     file_name = "xlrdLearn.xls"
     data = xlrd3.open_workbook(base_path + file_name, formatting_info=True)
     table01 = data.xf_list[1]
@@ -71,7 +71,7 @@ def opera_excel_xf():
 
 if __name__ == "__main__":
     excel_file = opera_excel()
-    base_path = "D:\\03gitHub\\pythonLearn\\a01PythonLearn\\file\\"
+    base_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\file\\"
     file_name = "file06.txt"
     c04FileIOType.write_file_func(base_path + file_name, excel_file)
 

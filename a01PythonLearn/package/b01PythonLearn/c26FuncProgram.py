@@ -4,6 +4,7 @@
 import os
 import sys
 import time
+import functools
 
 """
 函数式编程
@@ -29,6 +30,29 @@ import time
             filter(function, iterable)
             function:函数名
             iterable:迭代对象(列表,元组...)
+    
+    
+    reduce
+        reduce()函数会对参数序列中元素进行累积
+
+        语法：
+            reduce(function, iterable[, initializer])
+            参数：
+                function     函数，有两个参数
+                iterable     可迭代对象
+                initializer  可选，初始参数
+            返回值：
+                函数计算结果
+        
+        解释：
+            函数将一个数据集合(链表，元组等)中的所有数据进行下列操作：
+                用传给reduce中的函数function(有两个参数)先对集合中的第1、2个元素进行操作
+                得到的结果再与第三个数据用function函数运算，最后得到一个结果
+            也就是说把iterable中的所有值进行function计算，得到一个计算结果
+        
+        注意：
+            Python3.x reduce()已经被移动到functools模块里，如果要使用，需要引入functools模块来调用reduce()函数
+            from functools import reduce
 
 lambda表达式
     匿名函数

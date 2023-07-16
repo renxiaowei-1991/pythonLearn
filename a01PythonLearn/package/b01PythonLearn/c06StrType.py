@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-
+import random
 import string
 
 """
@@ -113,8 +113,52 @@ import string
             等价于string.zlill(2)
             不过rjust可以指定用于补充的字符
             补齐两位(2->02),用于数值月份转字符串月份
+            
+        string.ascii_lowercase
+            小写字母字符串
+        string.ascii_uppercase
+            大写字母字符串
+        string.digits
+            数字字符串
+        string.punctuation
+            获取特殊字符字符串
+        string.ascii_letters
+            获取小写字母+大写字母字符串
+        
+        str.isdigit() 判断字符是否是数字
+        str.isupper() 判断字符是否是大写字母
+        str.islower() 判断字符是否是小写字母
+        str.isascii() 判断字符是否是字母
 
 """
+
+def random_get_passwd(passwd_len: int):
+    """
+    随机密码生成器
+    :param passwd_len: 指定随机生成的密码的长度
+    :return: 返回字符串密码
+    """
+    passwd_char = ""
+    # 小写字母字符串
+    # print(string.ascii_lowercase)
+    # 大写字母字符串
+    # print(string.ascii_uppercase)
+    # 数字字符串
+    # print(string.digits)
+    # 获取特殊字符字符串
+    # print(string.punctuation)
+
+    # 密码基数列表，密码字符选择的基础
+    passwd_char = passwd_char + \
+                  string.ascii_lowercase + \
+                  string.ascii_uppercase + \
+                  string.digits + \
+                  string.punctuation
+    # random.sample: 从字符串中随机选取指定位数的字符的列表
+    return "".join(random.sample(passwd_char, passwd_len))
+
+print(random_get_passwd(20))
+
 
 print("字符串练习：")
 a = "Hello"
