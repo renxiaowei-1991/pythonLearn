@@ -44,6 +44,11 @@ import math
             创建一个新字典，以序列seq中元素做字典的键，val为字典所有键对应的初始值
         dict.get(key,default=None)
             返回指定键的值，如果值不在字典中返回default值
+            dict.get(key, "Not in dictionary") : 如果不在字典中，返回的值可以人为指定。这里既是指定为；Not in dictionary
+            样例：
+                fib = {1: 1, 2: 1, 3: 2, 4: 3}
+                print(fib.get(4, 0) + fib.get(7, 5))
+                # 返回 8
         dict.has_key(key)
             如果建在字典dict里返回true，否则返回false 
             Python 3.X 不支持该方法 
