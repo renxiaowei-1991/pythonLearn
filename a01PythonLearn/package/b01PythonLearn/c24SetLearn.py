@@ -33,6 +33,12 @@ import sys
         s.clear()    清空集合
         len(x)       集市集合元素个数
         x in s       判断元素是否在集合中存在
+        
+        计算合集：set的方法intersection可以计算两个set的合集
+            set01 = set()
+            set02 = set()
+            set.intersection(set01, set02) # 方法1
+            set01.intersection(set02) # 方法2
 
 
 
