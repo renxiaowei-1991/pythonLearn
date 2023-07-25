@@ -4,6 +4,24 @@
 import os
 
 
+def none_node():
+    """
+    None:
+        None对象用于表示缺值。
+        像其他编程语言中的null或者空值一样，如 0，[] 和空字符串。在转换为布尔变量时为False
+        None是一个特殊的常量
+        None和False不同
+        None不是0
+        None不是空字符串
+        None和任何其他的数据类型比较永远返回False
+        None有自己的数据类型NoneType
+        可以将None赋值给任何变量，但是不能创建其他的NoneType对象。
+
+        None对象是由不返回任何东西(没有调用return语句) 的函数返回的
+    :return:
+    """
+
+
 def locals_node():
     """
     locals() 函数会以字典类型返回当前位置的全部局部变量。
