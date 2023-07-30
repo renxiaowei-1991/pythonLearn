@@ -151,7 +151,6 @@ import re
 
 """
 
-
 """
 https://www.runoob.com/python3/python3-reg-expressions.html
 
@@ -219,12 +218,88 @@ re模块函数
         参数说明：
             pattern: 一个字符串形式的正则表达式
             flags    标志位(修饰符)，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等。
+        
+        注意：
+            compile提取编译好正则表达式，后续多次使用性能更好
+        
+    
+    re.findall
+        在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果有多个匹配模式，则返回元组列表，如果没有找到匹配的，则返回空列表。
+        语法：
+            re.findall(pattern, string, flags=0)
+            pattern.findall(string,[, pos[, endpos]])
+        
+        参数说明：
+            pattern: 匹配模式
+            string: 待匹配的字符串
+            pos: 可选参数，指定字符串的起始位置，默认为0
+            endpos: 可选参数，指定字符串的结束位置，默认为字符串的长度
+            
+        
+        注意：
+            match和search是匹配一次，findall匹配所有
+    
+    re.finditer(pattern, string, flags=0)
+        和findall类似，在字符串中找到正则表达式所匹配的所有子串，并把它们作为一个迭代器返回
+        参数说明：
+            pattern  匹配的正则表达式
+            string   要匹配的字符串
+            flags    标志位(修饰符)，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等。
+    
+    re.split(pattern, string[, maxsplit=0, flags=0])
+        split方法按照能够匹配的子串将字符串分割后返回列表
+        参数说明：
+            pattern  匹配的正则表达式
+            string   要匹配的字符串
+            maxsplit: 分割次数，maxsplit=-1 分割一次，默认为0，不限制次数
+            flags    标志位(修饰符)，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等。
+    
+    正则表达式对象
+        re.RegexObject
+            re.compile()返回RegexObject对象
+        re.MatchObject
+            group() 返回被RE匹配的字符串
+                start() 返回匹配开始的位置
+                end() 返回匹配结束的位置
+                span() 返回一个元组包含匹配(开始, 结束)的位置
+    
+    正则表达式模式(特殊部分)
+        (re)
+        (?imx)
+        (?-imx)
+        (?:re)
+        (?imx:re)
+        (?-imx:re)
+        (?#)
+        (?=re)
+        (?!re)
+        (?>re)
+        (?<re)
+        (?<=re)
     
     
     公用方法：
         注意：
             下面这些方法都是可以基于子串进行使用的。
             子串：通过匹配模式中( )方式匹配出来的多个子结果
+            正则表达式通常都包含反斜杠，所有最好使用原始字符串来表示。
+            模式原始(r"\t", 等价于"\\t")匹配想要特殊字符
+            r"\t", 等价于"\\t"
+        
+        匹配模式：
+            一组()表示一个匹配模式，() () ，表示两个匹配模式。
+            re.match(从头匹配): 取一组匹配结果，匹配模式匹配到的一个结果中的多个子串
+            re.search(整体匹配): 取一组匹配结果，匹配模式匹配到的一个结果中的多个子串
+            re.compile(正则对象): 方便 match和search使用
+            通过()将匹配结果分组后，可以通过\1...\9 \10，匹配第n个组的内容
+        
+        匹配结果
+            元组(一个匹配结果的多个匹配模式结果)：多个匹配模式的结果需要通过元组的方式存放。表示的是一个匹配结果
+            列表(单模式&多模式的多个匹配结果)：单模式，或者多个匹配模式作为一组匹配，匹配到的多个结果需要放到列表里面。
+            样例：
+                [('123', 'google'), ('456', 'www')]
+            
+            re.findall: 取多个匹配结果。每个匹配结果可能包含多个匹配模式匹配到的多个子串
         
         group([group1, ...])
             匹配结果
@@ -286,7 +361,7 @@ def re_match():
     # 正则表达式中
     # (.*) 表示第一个匹配子串。匹配子串用()限定
     # (.*?) 表示第二个匹配字符串。
-    matchObj = re. match(r"(.*) are (.*?) .*", line)
+    matchObj = re.match(r"(.*) are (.*?) .*", line)
     print(matchObj)
     if matchObj:
         print("子串元组(groups()): ")
@@ -362,9 +437,9 @@ def re_compile():
     pattern = re.compile(r"\d+")
     m = pattern.match("one12twothree34four")
     print(m)
-    m = pattern.match("one12twothree34four", 2, 10) # 从索引2开始匹配(从'e'的位置开始匹配)，没有匹配结果
+    m = pattern.match("one12twothree34four", 2, 10)  # 从索引2开始匹配(从'e'的位置开始匹配)，没有匹配结果
     print(m)
-    m = pattern.match("one12twothree34four", 3, 10) # 从索引3开始匹配(从'1'的位置开始匹配)，由匹配结果
+    m = pattern.match("one12twothree34four", 3, 10)  # 从索引3开始匹配(从'1'的位置开始匹配)，由匹配结果
     print(m)
     print(m.group())
     print(m.start())
@@ -380,7 +455,194 @@ def re_compile():
     return
 
 
+def re_findall():
+    result1 = re.findall(r"\d+", "runoob 123 google 456")
+    pattern = re.compile(r"\d+")
+    result2 = pattern.findall("runoob 123 google 456")
+    result3 = pattern.findall("runoob123google456", 0, 10)
+    pattern = re.compile(r"(\d+) (\w+)")
+    result4 = pattern.findall("runoob 123 google 456 www")
+    result5 = pattern.findall("runoob123google456", 0, 10)
+    pattern = re.compile(r"(\d+|\w+)")
+    result6 = pattern.findall("runoob 123 google 456 www")
+    result7 = pattern.findall("runoob123google456", 0, 10)
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)
+    print(result5)
+    print(result6)
+    print(result7)
+    return
+
+
+def re_finditer():
+    result1 = re.finditer(r"\d+", "12a32bc43jf3")
+    for r in result1:
+        print(r)
+    return
+
+
+def re_split():
+    str1 = "runoob 123 google 456 www"
+    str2 = "runoob123google456"
+    result1 = re.split(r" ", str1)
+    print(result1)
+    result2 = re.split(r"\d+", str1)
+    print(result2)
+    result3 = re.split(r" ", str1, maxsplit=1)
+    print(result3)
+    return
+
+
+def re_all():
+    str1 = "runoob 123 google 456 www"
+    str2 = "runoob123google456"
+    pattern1 = r"\d+"
+    pattern2 = r"\w+"
+    pattern3 = r"(\d+) (\w+)"
+    pattern4 = r"(\d+|\w+)"
+    result1 = re.match(pattern3, str1, flags=0)
+    print(result1)
+    result2 = re.search(pattern3, str1, flags=0)
+    print(result2)
+    print(result2.group(1))
+    print(result2.group(2))
+    result3 = re.compile(pattern3, flags=0)
+    print(result3.match(str1))
+    print(result3.search(str1))
+    result4 = re.findall(pattern3, str1, flags=0)
+    print(result4)
+    result5 = re.finditer(pattern3, str1, flags=0)
+    print(list(result5))
+
+    # print(111)
+    # for r in result5:
+    #     print(r.group(1))
+    #     print(r.group(2))
+    # print(r)
+
+    print(type(result3))
+    print(type(result2.group()))
+
+    return
+
+
+def date_is_right(date: str):
+    """
+    判断输入的字符串是否是10为日期格式：YYYY-MM-DD
+    :param date: 字符串格式日期
+    :return: 返回判断结果
+    """
+    result = False
+    pattern = r"\d{4}-\d{2}-\d{2}"
+    # 如果有匹配结果，会返回re.match对象，如果没有匹配结果，返回None
+    match_str = re.match(pattern, date, flags=0)
+    # result = True if match_str is not None else False
+    # match_str is not None 就是一个boolean值
+    result = match_str is not None
+    # print(match_str)
+    return result
+
+
+def get_phone_num(string: str):
+    """
+    提取文本中的电话号码
+    电话号码模式：1开头，长度为11位的数值串
+    :param string:
+    :return: 返回提取到的电话号码的列表
+    """
+    pattern = r"1\d{10}"
+    # re.findall可以搜索文本中的所有匹配的模式
+    result = re.findall(pattern, string, flags=0)
+    return result
+
+
+def get_mailbox_num(string: str):
+    """
+    从文本中提取邮箱列表
+    邮箱匹配模式：多位字母数字下划线中划线@多位字母数字.2~4位字母
+        \w: [a-zA-Z0-9_](经过测试，还能匹配中文)
+        *: 0或多位
+        +: 1或多位
+        .: 匹配任意字符(除了换行符)(如果匹配.本身，需要转义)
+        {2,4}: 匹配长度2-4位，不能写成{2-4}和{2, 4}
+    compile提取编译好正则表达式，后续多次使用性能更好
+    :param string:
+    :return:
+    """
+    pattern = r"[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,4}"
+    result = re.findall(pattern, string, flags=0)
+    # pattern = re.compile(r"[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,4}", flags=0)
+    # result = pattern.findall(string)
+    return result
+
+
+def content_hide(string: str):
+    """
+    替换文本中不允许使用的词
+    :param string:
+    :return: 返回替换以后的结果
+    """
+    pattern = re.compile(r"(最好|最低|绝对)", flags=0)
+    result = pattern.sub("***", string)
+    # pattern = r"(最好|最低|绝对)"
+    # result = re.sub(pattern, "***", string)
+    return result
+
+
+def handle_phone_num(string: str):
+    """
+    将文本中电话号码加密
+    电话号码模式：1开头，长度为11位的数值串
+    将匹配结果替换成 \1******\3，\1表示第一组匹配模式匹配结果,\3表示第三组匹配模式匹配结果
+    :param string:
+    :return:
+    """
+    pattern = re.compile(r"(1\d)(\d{7})(\d{2})", flags=0)
+    result = pattern.search(string)
+    # print(result)
+    # print(result.group(1))
+    # print(result.group(2))
+    # print(result.group(3))
+    # 将匹配结果替换成 \1******\3，\1表示第一组匹配模式匹配结果,\3表示第三组匹配模式匹配结果
+    result = pattern.sub(r"\1******\3", string)
+    return result
+
+
 # re_match()
 # re_search()
 # re_sub()
-re_compile()
+# re_compile()
+# re_findall()
+# re_finditer()
+# re_split()
+# re_all()
+print("2023-07-29", date_is_right("2023-07-29"))
+print("202-05-20", date_is_right("202-05-20"))
+print("2021/05-20", date_is_right("2021/05-20"))
+print("20230729", date_is_right("20230729"))
+print("20a10729", date_is_right("20a10729"))
+
+text = "白日依19989881888山尽，黄河入45645546468798987海流。" \
+       "欲穷12345千里目，更上15619292345一层楼。"
+print(get_phone_num(text))
+
+content = """
+寻隐者12345@qq.com不遇
+朝代：唐asdf12dsa#abc.com代
+作python666@163.cn者：贾岛
+松下问童子，言师python-abc@163com采药去。
+只在python_ant-666@sina.net此山中，云深不知处。
+"""
+print(get_mailbox_num(content))
+
+content = "这个商品很好，质量最好，用起来很不错，并且价格最低，绝对的物美价廉"
+print(content_hide(content))
+
+
+content = """
+白日依19989881888山尽，黄河入45645546468798987海流。
+欲穷12345千里目，更上15619292345一层楼。
+"""
+print(handle_phone_num(content))

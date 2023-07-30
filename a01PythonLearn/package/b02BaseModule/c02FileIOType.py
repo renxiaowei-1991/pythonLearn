@@ -131,6 +131,44 @@ def path_change_func(basepath):
     return
 
 
+def file_join_func():
+    """
+    实现文件的关联
+        可以指定文件，指定管理键
+    :return:
+    """
+    base_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\file\\"
+
+    user_grade = {}
+    user_student = {}
+    user_list = []
+    with open(base_path + "p086_grade.txt", "r+", encoding="utf-8") as fin_grade, \
+        open(base_path + "p086_student.txt", "r+", encoding="utf-8") as fin_student, \
+        open(base_path + "p086.txt", "w+", encoding="utf-8") as fout:
+        try:
+            for x in fin_grade.readlines():
+                user_id, grade = x.strip().split(",")
+                user_grade[user_id] = grade
+            for x in fin_student.readlines():
+                user_id, user_name = x.strip().split(",")
+                user_student[user_id] = user_name
+                if user_id in user_grade:
+                    user = [user_id, user_name, user_grade[user_id]]
+                else:
+                    user = [user_id, user_name, "未匹配到成绩"]
+                user_list.append(user)
+            for user in user_list:
+                user.append("\n")
+                fout.write(",".join(user))
+
+        except BaseException as be:
+            print(f"异常: {be}")
+
+        print(user_grade)
+        print(user_student)
+        print(user_list)
+        return
+
 
 # 文件存储根目录
 base_path = "/file\\"
@@ -141,4 +179,5 @@ base_path = "/file\\"
 # rename_file_func(base_path + "file04.txt", base_path + "file05.txt")
 # copy_file_func(base_path + "file05.txt", base_path + "file04.txt")
 # remove_file_func(base_path + "file05.txt")
-path_change_func(base_path)
+# path_change_func(base_path)
+file_join_func()

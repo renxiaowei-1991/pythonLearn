@@ -8,8 +8,10 @@ zip
 
     zip函数可以将多个序列同时打包在一起，不只是2个，可以是3个
 """
-
+import datetime
+import os
 import string
+import zipfile
 
 
 def zip_test():
@@ -56,9 +58,51 @@ def create_file(file_path_in):
     return True
 
 
+def get_zip_file(path: str):
+    """
+    压缩path路径下的文件，存储在path路径中
+    ~$格式的文件是临时文件，需要忽略
+    .zip格式的文件是以及压缩好的文件，需要忽略
+    string.startswith: 判断字符串前缀
+    string.endswith: 判断字符串后缀
+    zipfile.ZipFile: 打开压缩文件
+    os.walk(path): 扫描path路径下所有路径及文件
+    os.path.relpath(filepath, tarpath): 获取相对路径(filepath相对于tarpath的路径)
+    zip_file.write(filepath): 压缩文件中显示绝对路径
+    zip_file.write(filepath, writepath): 压缩文件中显示相对路径
+    :param path:
+    :return:
+    """
+    # 变更路径
+    os.chdir(path)
+    print("压缩文件存放路径：", os.getcwd())
+    # 获取压缩文件名称: 文件夹名称-datetime格式化时间.zip
+    zip_name = os.path.basename(path) + "-" + datetime.datetime.today().strftime("%Y%m%d%H%M%S") + ".zip"
+    print("压缩文件名：", zip_name)
+    # 打开压缩文件
+    with zipfile.ZipFile(zip_name, "w", zipfile.ZIP_DEFLATED) as zip_file:
+        for root_file, sub_file, filelist in os.walk(path):
+            for file in filelist:
+                if not file.startswith("~$") and not file.endswith(".zip"):
+                    filepath = os.path.join(root_file, file)
+                    tarpath = os.path.dirname(path)
+                    print(filepath)
+                    # 压缩文件中显示绝对路径
+                    # zip_file.write(filepath)
+                    # 获取相对路径
+                    writepath = os.path.relpath(filepath, tarpath)
+                    # 压缩文件中显示相对路径
+                    zip_file.write(filepath, writepath)
+        zip_file.close()
+    return
+
+
 if __name__ == "__main__":
     zip_test()
 
     file_path = "D:\\02helloWorld\\03Python\\a01pythonLearn\\file\\file07.txt"
     print(create_file(file_path))
     print(string.ascii_lowercase[::2], string.ascii_lowercase[1::2])
+
+    file_path = r"D:\02helloWorld\03Python\a01pythonLearn\file"
+    get_zip_file(file_path)
