@@ -440,26 +440,99 @@ def pandas_excel_to_csv(excel_file, csv_file, sheet="Sheet1", skiprow=0, include
     
     特征选择：比如一个excel中有多列的数据，但是我们只需要某些列。那么可以选择指定的列进行使用
     loc: 可以选择具体的索引
-    
-    df[["A", "B"]]: 选择A列+B列
+
     df["A"]: 选择A列
-    df.loc[1:3]
-    df.loc[1:3, "A"]
-    df.loc[1:3, ["A", "B"]]
-    
-    
-    
+    df[["A", "B"]]: 选择A列+B列
+    df.loc[1]: 不指定列，选择所有列，索引1行
+    df.loc[1:3]: 不指定列，选择所有列，索引1-3行
+    df.loc[1:3, "A"]: 选择A列，索引1-3行
+    df.loc[1:3, ["A", "B"]]: 选择A列+B列，索引1-3行
+     
 2.3.2、数据转换与衍生
     使用apply()函数或自定义函数对数据进行转换和衍生，如：特征缩放、数值转换、日期提取等，以适应不同的分析需求
     apply()
+    
+    数据衍生-增加行
+        方法一：通过索引的方式增加行，值按照列表指定。值按照字段顺序 姓名、年龄、爱好
+            df.loc[len(df)] = ["诸葛亮", 55, "计谋"]
+        方法二：通过索引的方式增加行，值根据字典指定
+            df.loc[len(df)] = {"Name": "任小伟", "Age": 1024, "Gender": "学习"}
+        方法三：通过pandas.concat([])拼接DataFrame
+            df_a = pandas.concat([df, df], ignore_index=True)
+            
 2.3.3、数据合并与拆分
     通过使用merge()函数或concat()函数，可以将多个数据集合并成一个，或将一个数据集拆分成多个，以满足数据分析的需求
     merge(): 合并数据集
     concat(): 
+
+    数据合并
+        merge(): 关联合并数据集
+        参数
+          left: 左侧的DataFrame，要进行合并的左侧数据集
+            可选值: DataFrame
+          right: 右侧的DataFrame，要进行合并的右侧数据集
+            可选值: DataFrame
+          how: 合并方式，指定如何对齐和合并数据
+            可选值: left,right,inner,outer。默认值：inner
+          on: 列名或列名列表，用于指定进行合并的列
+            可选值: 列名或列名列表，如果要关联的名称两边都一样，可以直接用on
+          left_on: 左侧DataFrame中用于合并的列
+            可选值: 列名或列名列表，如果要关联的名称不一样，可以使用这个。支持列表参数
+          right_on: 右侧DataFrame中用于合并的列
+            可选值：列名或列名列表，如果要关联的名称不一样，可以使用这个。支持列表参数
+          suffixes: 用于解决合并后列名冲突的后缀。
+            可选值：原则或列表
+
 2.3.4、数据重塑与透视
     使用pivot()函数或melt()函数，可以对数据进行重塑和透视，以更好地理解和分析数据的关系和趋势
     pivot()
     melt()
+
+    数据重塑：行转列(类似于平时做报表的时候，有很多金额列，可以转换成，有一列金额类型列，和一列金额列 )
+        melt(): 将宽格式的DataFrame转换为长格式，也称为"unpivot"操作
+        参数：
+          frame: 要进行转换的DataFrame
+          id_vars: 保持不变的列，即转换后的长格式中的标识符列
+          value_vars: 要转换的列，即转换后的长格式中的值列
+          var_name: 用于标识值列的名称列的名称
+          value_name: 用于标识值的列的名称
+    
+    数据透视
+          数据透视是一种数据处理技术，用于将原始数据重新组织和汇总，以便更好地理解和分析数据的关系和趋势。
+          透视表是数据透视的一种常见形式，它将数据按照指定的行和列进行分组，并对其中的数值进行聚合计算
+          通过数据透视，可以根据自己的需求和分析目标，对数据进行灵活的重塑和汇总，以便从不同的角度和维度观察和理解数据
+        pivot: 数据透视
+        参数：
+          index: 维度(纵坐标)
+          columns: 维度(横坐标)
+          values: 指标(值)
+        pivot_table: 数据透视表
+          类似pivot，pivot_table是一个通用的透视表函数，可以处理具有重复索引值的数据，并允许使用聚合函数对重复值进行汇总计算
+        参数：
+          data: 要进行透视表操作的数据集
+          index: 用于分组的列或列表，即透视表的行索引
+          columns: 用于分组的列或列表，即透视表的列索引
+          values: 用于聚合的列，即要进行透视和计算的值列
+          aggfunc: 聚合函数或函数列表，用于对重复值进行聚合操作，默认为np.mean
+            numpy.mean: 计算每列数据平均值
+            numpy.median: 计算每列数据中位数
+            numpy.sum: 计算每列数据总和
+            numpy.min: 计算每列数据最小值
+            numpy.max: 计算每列数据最大值
+            numpy.std: 计算每列数据标准差
+            numpy.var: 计算每列数据方差
+            numpy.count: 计算每列数据非缺失值数量
+            numpy.quantile: 计算每列数据指定分位数
+            样例: df["销售金额"].quantile(25 / 100)  # 25%位置的数
+            numpy.corr: 计算每列数据之间的相关系数(相关性分析)
+          fill_value: 替换缺失值的值
+          margins: 是否显示行和列的汇总统计，默认为False
+          margins_name: 汇总统计的行和列的标签名称
+        注意：
+          pivot：不能处理重复值，维度和指标如果是重复的会报错
+          pivot_table: 可以处理重复值，且可以对指标进行计算
+        groupby
+          sql的group by 功能
 """
 def pandas_data_view():
     """
@@ -858,8 +931,8 @@ def pandas_handle_data():
             df_a = pandas.concat([df, df], ignore_index=True)
     2.3.4、数据重塑与透视
         使用pivot()函数或melt()函数，可以对数据进行重塑和透视，以更好地理解和分析数据的关系和趋势
-        pivot()
-        melt()
+        melt(): 数据重塑
+        pivot(): 数据透视
     :return:
     """
     df = pandas.DataFrame({
@@ -1004,13 +1077,29 @@ def pandas_handle_data():
     #   类似pivot，pivot_table是一个通用的透视表函数，可以处理具有重复索引值的数据，并允许使用聚合函数对重复值进行汇总计算
     # 参数：
     #   data: 要进行透视表操作的数据集
-    #   values: 用于聚合的列，即要进行透视和计算的值列
     #   index: 用于分组的列或列表，即透视表的行索引
     #   columns: 用于分组的列或列表，即透视表的列索引
+    #   values: 用于聚合的列，即要进行透视和计算的值列
+    #   aggfunc: 聚合函数或函数列表，用于对重复值进行聚合操作，默认为np.mean
+    #     mean(): 计算每列数据平均值
+    #     median(): 计算每列数据中位数
+    #     sum(): 计算每列数据总和
+    #     min(): 计算每列数据最小值
+    #     max(): 计算每列数据最大值
+    #     std(): 计算每列数据标准差
+    #     var(): 计算每列数据方差
+    #     count(): 计算每列数据非缺失值数量
+    #     quantile(): 计算每列数据指定分位数
+    #     样例: df["销售金额"].quantile(25 / 100)  # 25%位置的数
+    #     corr(): 计算每列数据之间的相关系数(相关性分析)
+    #   fill_value: 替换缺失值的值
+    #   margins: 是否显示行和列的汇总统计，默认为False
+    #   margins_name: 汇总统计的行和列的标签名称
     # 注意：
     #   pivot：不能处理重复值，维度和指标如果是重复的会报错
     #   pivot_table: 可以处理重复值，且可以对指标进行计算
     # groupby
+    #   sql的group by 功能
     sales_data = {
         "产品": ["A", "A", "B", "B", "A", "B"],
         "月份": ["一月", "二月", "一月", "二月", "三月", "三月"],
@@ -1019,7 +1108,20 @@ def pandas_handle_data():
     df_sales = pandas.DataFrame(sales_data)
     print("销售数据: \n", df_sales)
     print("数据透视: \n", df_sales.pivot(index="产品", columns="月份", values="销售额"))
+    print("数据透视表: \n", df_sales.pivot_table(index="产品", columns="月份", values="销售额"))
+    print("数据透视表: \n", df_sales.pivot_table(index="产品", columns="月份", values="销售额", aggfunc=numpy.mean))
+    print("数据透视表: \n", df_sales.pivot_table(index="产品", columns="月份", values="销售额", aggfunc=numpy.sum, margins=True))
+    print("数据透视表: \n", df_sales.pivot_table(index="产品", columns="月份", values="销售额", aggfunc=numpy.sum, margins=True, margins_name="总金额"))
+    print("数据分组汇总(指定分组字段): \n", df_sales.groupby(by=["产品", "月份"]))
+    print("数据分组汇总(指定聚合字段): \n", df_sales.groupby(by=["产品", "月份"])["销售额"])
+    print("数据分组汇总(指定聚合方式): \n", df_sales.groupby(by=["产品", "月份"])["销售额"].sum())
+    print("数据分组汇总(指定排序字段(不管用)): \n", df_sales.sort_values(by="月份").groupby(by=["产品", "月份"])["销售额"].sum())
 
+    # 查看groupby每一步的返回值
+    for i in df_sales.groupby(by=["产品", "月份"]):
+        print(i)
+    for i in df_sales.groupby(by=["产品", "月份"])["销售额"]:
+        print(i)
 
     return
 
@@ -1053,5 +1155,4 @@ if __name__ == "__main__":
     # pandas_handle_standard()
 
     # 数据预处理
-    # 特征选择与删除
     pandas_handle_data()
