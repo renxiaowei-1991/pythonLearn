@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import re
 
+import matplotlib.pyplot as plt
 import pandas
 import numpy
 
@@ -1126,6 +1127,36 @@ def pandas_handle_data():
     return
 
 
+"""
+数据可视化
+
+"""
+
+
+def pandas_bi_show():
+    """
+    数据可视化
+    绘制DataFrame图标，如折线图、柱状图
+    plot(): 绘制DataFrame图标，如折线图、柱状图
+    :return:
+    """
+    sales_data = {
+        "产品": ["A", "A", "B", "B", "A", "B"],
+        "月份": ["一月", "二月", "一月", "二月", "三月", "三月"],
+        "销售额": [1000, 1500, 2000, 1800, 1200, 2300]
+    }
+    df_sales = pandas.DataFrame(sales_data)
+
+    # 绘制折线图
+    plt.plot(df_sales["产品"], df_sales["销售额"])
+    plt.xlabel("产品")
+    plt.ylabel("销售额")
+    plt.title("销售额趋势图")
+    plt.show()
+
+    return
+
+
 if __name__ == "__main__":
     # pandas基础
     # pandas_series()
@@ -1155,4 +1186,7 @@ if __name__ == "__main__":
     # pandas_handle_standard()
 
     # 数据预处理
-    pandas_handle_data()
+    # pandas_handle_data()
+
+    # DataFrame图形化显示
+    pandas_bi_show()
