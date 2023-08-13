@@ -393,11 +393,17 @@ def selenium_test():
     #   - 找到商品对应标签位置
     #   - 需要等待页面加载完成，设置延时等待，加载完成之后就执行下面的代码
     driver.implicitly_wait(10)
-    shops = driver.find_elements(by=By.CLASS_NAME, value='gl-i-wrap')
-    for shop in shops:
+    goods = driver.find_elements(by=By.CLASS_NAME, value='gl-i-wrap')
+    for good in goods:
         # 通过css选择器获取具体的内容
-        title = shop.find_element(by=By.TAG_NAME, value='.p-name a em')
-        print(title)
+        # .p-name class
+        # .p-name下面的子标签a
+        # a下面的子标签em
+        title = good.find_element(by=By.TAG_NAME, value='.p-name a em').text
+        price = good.find_element(by=By.TAG_NAME, value='.p-price strong i').text
+        shop = good.find_element(by=By.TAG_NAME, value='.p-shop span a').text
+        comment = good.find_element(by=By.TAG_NAME, value='.p-commit strong a').text
+        print(title, price, comment)
     # print(shops)
 
     return
