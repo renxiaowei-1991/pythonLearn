@@ -394,16 +394,27 @@ def selenium_test():
     #   - 需要等待页面加载完成，设置延时等待，加载完成之后就执行下面的代码
     driver.implicitly_wait(10)
     goods = driver.find_elements(by=By.CLASS_NAME, value='gl-i-wrap')
+    good_list = []
     for good in goods:
         # 通过css选择器获取具体的内容
         # .p-name class
         # .p-name下面的子标签a
         # a下面的子标签em
-        title = good.find_element(by=By.TAG_NAME, value='.p-name a em').text
-        price = good.find_element(by=By.TAG_NAME, value='.p-price strong i').text
-        shop = good.find_element(by=By.TAG_NAME, value='.p-shop span a').text
-        comment = good.find_element(by=By.TAG_NAME, value='.p-commit strong a').text
-        print(title, price, comment)
+        try:
+            title = good.find_element(by=By.TAG_NAME, value='.p-name a em').text
+            price = good.find_element(by=By.TAG_NAME, value='.p-price strong i').text
+            comment = good.find_element(by=By.TAG_NAME, value='.p-commit strong a').text
+            shop = good.find_element(by=By.TAG_NAME, value='.p-shop span a').text
+            s = {
+                '标题': title,
+                '价格': price,
+                '评论': comment,
+                '店铺': shop
+            }
+            good_list.append(s)
+        except BaseException as be:
+            print("异常")
+    print(good_list)
     # print(shops)
 
     return
