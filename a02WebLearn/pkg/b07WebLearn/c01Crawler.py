@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import os
+
 """
 python爬虫开发
 
@@ -168,7 +170,7 @@ Selenium: 自动化测试模块，动态网页下载
         ActionChains执行原理：当调用ActionChains的方法是，不会立即执行，而是会将所有的操作按顺序存放在一个队列里，当调用perform()方法是，队列中的事件会依次执行
 
     问题：
-        打开浏览器闪退：
+    1、打开浏览器闪退：
         版本问题：
             selenium版本太高
                 依次从高版本到低版本测试，哪个版本可以使用。我的是4.0.0
@@ -187,6 +189,14 @@ Selenium: 自动化测试模块，动态网页下载
 
         注意：
             如果浏览器更新后，可能需要更新驱动版本。
+    
+    2、加载驱动报错
+        ValueError: Timeout value connect was
+        selenium需要的urllib3版本与requests需要的urllib3版本有冲突
+        解决办法：
+            把selenium、requests、urllib3都卸载了。
+            然后先安装指定的想要安装的selenium版本，会自动安装需要的urllib3版本。
+            然后按照requests即可
 
 
 爬虫开发步骤
@@ -219,7 +229,6 @@ Google Chrome浏览器
                 Timing:
 
 """
-import time
 
 """
 Web知识
@@ -318,6 +327,7 @@ r.text
 history
 """
 
+import time
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver

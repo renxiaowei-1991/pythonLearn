@@ -1,5 +1,8 @@
 #!/usr/bin/env pyton
 # -*- coding:utf-8 -*-
+import os
+from pprint import pprint
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
@@ -85,3 +88,4 @@ def save_data(data):
 
 if __name__ == "__main__":
     save_data(get_date())
+    # pprint(os.environ)
